@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
-public class IndexController {
+@Controller
+public class LoginController {
 
-	@RequestMapping(path = "/",method = RequestMethod.GET)
+	@RequestMapping(path = "/login",method = RequestMethod.GET)
 	public String indexView() {
-		return "Cououc";
+		return "login.jsp";
 	}
 }
