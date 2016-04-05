@@ -87,7 +87,11 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="110">
               <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#520#521#0" expanded="false" />
+                <element signature="e#542#543#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -731,12 +735,12 @@
       <option name="presentableId" value="Default" />
       <updated>1459845352022</updated>
       <workItem from="1459845354980" duration="260000" />
-      <workItem from="1459851481099" duration="1929000" />
+      <workItem from="1459851481099" duration="2441000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2189000" />
+    <option name="totallyTimeSpent" value="2701000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="31" y="13" width="1660" height="1014" extended-state="0" />
@@ -811,7 +815,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#520#521#0" expanded="false" />
+            <element signature="e#542#543#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
