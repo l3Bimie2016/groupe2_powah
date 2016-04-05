@@ -23,9 +23,13 @@ public class App extends AbstractVerticle {
     @Override
     public void start() throws Exception {
         Router router = Router.router(vertx);
+<<<<<<< HEAD
 
         router.route().handler(BodyHandler.create());
 
+=======
+        
+>>>>>>> d1a2d6dfb165aaa63ffa683ac3f297f81dd53101
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(8090);
@@ -35,6 +39,7 @@ public class App extends AbstractVerticle {
                 .put("type", "jceks")
                 .put("password", "secret"));
 
+<<<<<<< HEAD
         JWTAuth authProvider = JWTAuth.create(vertx, config);
 
         router.route("/private/*").handler(JWTAuthHandler.create(authProvider));
@@ -43,6 +48,11 @@ public class App extends AbstractVerticle {
             JsonObject json = x.getBodyAsJson();
             String username = json.getString("username");
             String password = json.getString("password");
+=======
+        JWTAuth provider = JWTAuth.create(vertx, config);
+
+        router.get("/login").handler(x -> {
+>>>>>>> d1a2d6dfb165aaa63ffa683ac3f297f81dd53101
             String token = "";
             Boolean success = false;
             if (username.equals("admin") && password.equals("admin")) {

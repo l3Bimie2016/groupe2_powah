@@ -1,6 +1,8 @@
 package fr.assurance.security;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import fr.assurance.bean.ApplicationData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.google.gson.Gson;
 
 @Service
 public class AssuranceAuthProvider implements AuthenticationProvider{
@@ -22,6 +26,19 @@ public class AssuranceAuthProvider implements AuthenticationProvider{
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
+		final String uri = "http://localhost:8090/login";
+		
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("username", username);
+		data.put("password", password);
+		
+		String request = new Gson().toJson(data);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		String response = restTemplate.getForObject(uri, String.class);
+		//String response = restTemplate.postForObject(uri, request, String.class);
+		System.out.println(response);
+		
 		appData.setToken("");
 		return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<GrantedAuthority>());
 	}
