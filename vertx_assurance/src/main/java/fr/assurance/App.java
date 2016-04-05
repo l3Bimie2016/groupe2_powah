@@ -21,7 +21,7 @@ public class App extends AbstractVerticle {
     @Override
     public void start() throws Exception {
         Router router = Router.router(vertx);
-
+        
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(8090);
@@ -32,7 +32,7 @@ public class App extends AbstractVerticle {
                 .put("password", "secret"));
 
         JWTAuth provider = JWTAuth.create(vertx, config);
-        provider.
+
         router.get("/login").handler(x -> {
             String token = "";
             // "paulo".equals(username) && "super_secret".equals(password)
