@@ -32,7 +32,7 @@ public class App extends AbstractVerticle {
                 .put("password", "secret"));
 
         JWTAuth provider = JWTAuth.create(vertx, config);
-
+        provider.
         router.get("/login").handler(x -> {
             String token = "";
             // "paulo".equals(username) && "super_secret".equals(password)
