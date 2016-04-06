@@ -3,6 +3,7 @@ package fr.assurance.entities;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,13 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @Entity(name="user")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Version
@@ -44,6 +46,9 @@ public class User {
                     nullable = false, updatable = false) })
     private List<Role> roles;
 
+	@OneToMany(mappedBy="owner", cascade=CascadeType.ALL)
+	private List<Quote> quotes;
+	
 	public Integer getId() {
 		return id;
 	}
