@@ -108,5 +108,13 @@ public class User {
 	public boolean remove(Role role) {
 		return roles.remove(role);
 	}
-	
+
+	public List<Quote> getQuotes() {
+		return quotes;
+	}
+
+	public boolean add(Quote e) {
+		return quotes.add(e);
+	}
+
 }

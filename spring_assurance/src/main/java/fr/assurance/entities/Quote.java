@@ -11,25 +11,31 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+
 @Entity @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Quote {
 	@Id @GeneratedValue(strategy = GenerationType.TABLE)
 	protected Integer id;
+	protected String type;
 	protected String name;
 	protected Date date;
 	protected String street;
 	protected String zip_code;
 	protected String city;
-	
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	protected User owner;
-	
+	protected Integer step;
+	protected Boolean done;
+
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getName() {
 		return name;
@@ -60,5 +66,27 @@ public abstract class Quote {
 	}
 	public void setCity(String city) {
 		this.city = city;
+	}
+	public Integer getStep() {
+		return step;
+	}
+	public void setStep(Integer step) {
+		this.step = step;
+	}
+	public Boolean getDone() {
+		return done;
+	}
+	public void setDone(Boolean done) {
+		this.done = done;
+	}
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	protected User owner;
+	
+	public User getOwner() {
+		return owner;
+	}
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 }
