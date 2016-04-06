@@ -45,7 +45,7 @@ public class App extends AbstractVerticle {
 
         router.route("/private/*").handler(JWTAuthHandler.create(authProvider));
 
-        router.post("/login").consumes("application/json").handler(x -> {
+        router.post("/login").consumes("application/json").handler(x -> { System.out.println("-- /login");
             JsonObject json = x.getBodyAsJson();
             String username = json.getString("username");
             String password = json.getString("password");
