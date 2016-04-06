@@ -39,7 +39,7 @@ public class AssuranceAuthProvider implements AuthenticationProvider{
 		//String response = restTemplate.postForObject(uri, request, String.class);
 		System.out.println(response);
 		
-		appData.setToken("");
+		appData.setToken(response);
 		return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<GrantedAuthority>());
 	}
 
