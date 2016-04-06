@@ -15,6 +15,11 @@ public class HouseQuote extends Quote {
 	private String heating_type;
 	private String formula;
 	
+	public HouseQuote() {
+		this.type = "HouseQuote";
+		this.done = false;
+	}
+	
 	public String getHouse_type() {
 		return house_type;
 	}

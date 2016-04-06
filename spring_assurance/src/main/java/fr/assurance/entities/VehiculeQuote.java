@@ -14,6 +14,11 @@ public class VehiculeQuote extends Quote {
 	private String contract_type;
 	private Float total_price;
 	
+	public VehiculeQuote() {
+		this.type = "VehiculeQuote";
+		this.done = false;
+	}
+	
 	public String getBrand() {
 		return brand;
 	}
