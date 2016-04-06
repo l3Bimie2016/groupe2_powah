@@ -2,12 +2,19 @@ package fr.assurance;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.asyncsql.AsyncSQLClient;
+import io.vertx.ext.asyncsql.MySQLClient;
 import io.vertx.ext.auth.jwt.JWTAuth;
 import io.vertx.ext.auth.jwt.JWTOptions;
+import io.vertx.ext.sql.ResultSet;
+import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.JWTAuthHandler;
+
+import java.util.List;
 
 /**
  * Created by Max on 04/04/2016.
@@ -23,13 +30,8 @@ public class App extends AbstractVerticle {
     @Override
     public void start() throws Exception {
         Router router = Router.router(vertx);
-<<<<<<< HEAD
-
         router.route().handler(BodyHandler.create());
 
-=======
-        
->>>>>>> d1a2d6dfb165aaa63ffa683ac3f297f81dd53101
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(8090);
@@ -39,20 +41,14 @@ public class App extends AbstractVerticle {
                 .put("type", "jceks")
                 .put("password", "secret"));
 
-<<<<<<< HEAD
         JWTAuth authProvider = JWTAuth.create(vertx, config);
 
         router.route("/private/*").handler(JWTAuthHandler.create(authProvider));
 
-        router.post("/login").consumes("application/json").handler(x -> {
+        router.post("/login").consumes("application/json").handler(x -> { System.out.println("-- /login");
             JsonObject json = x.getBodyAsJson();
             String username = json.getString("username");
             String password = json.getString("password");
-=======
-        JWTAuth provider = JWTAuth.create(vertx, config);
-
-        router.get("/login").handler(x -> {
->>>>>>> d1a2d6dfb165aaa63ffa683ac3f297f81dd53101
             String token = "";
             Boolean success = false;
             if (username.equals("admin") && password.equals("admin")) {
@@ -62,5 +58,50 @@ public class App extends AbstractVerticle {
 
             x.response().end("{success:'"+success+"', token:'"+token+"'}");
         });
+
+        router.get("/list").handler(x -> { System.out.println("-- /list");
+
+            JsonObject mySQLClientConfig = new JsonObject()
+                    .put("host", "localhost")
+                    .put("port", 3306)
+                    .put("username", "rootpass")
+                    .put("password", "plop")
+                    .put("database", "vertx_assurance");
+            AsyncSQLClient mySQLClient = MySQLClient.createShared(vertx, mySQLClientConfig);
+
+            mySQLClient.getConnection(res -> { System.out.println("-- 1");
+
+                if (res.succeeded()) { System.out.println("-- 2");
+
+                    SQLConnection connection = res.result();
+
+
+                    JsonObject json = new JsonObject();
+
+                    connection.query("SELECT * FROM voiture", query -> {
+                        System.out.println("-- 3");
+                        if (query.succeeded()) {
+                            System.out.println("-- 4");
+                            // Get the result set
+                            ResultSet resultSet = query.result();
+                            List<JsonArray> results = resultSet.getResults();
+                            int i = 1;
+                            for (JsonArray row : results) {
+                                json.put("row"+i, row.getInteger(0) + "," + row.getInteger(1) + "," + row.getInteger(2) + "," + row.getInteger(3));
+                                i++;
+                            }
+                        } else {
+                            System.out.println("-- 5");
+                            // Failed!
+                        }
+                        x.response().end(json.toString());
+                    });
+                } else { System.out.println("-- 6 "+res.cause().getMessage());
+                    // Failed to get connection - deal with it
+                }
+            });
+        });
+
     }
+
 }
