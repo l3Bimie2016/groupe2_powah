@@ -1,4 +1,6 @@
-.idea
-*/.idea
+/.idea
 /bin/
-*/target/
+spring_assurance/.idea
+vertx_assurance/.idea
+spring_assurance/target/
+vertx_assurance/target/
