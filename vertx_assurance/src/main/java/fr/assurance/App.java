@@ -27,6 +27,13 @@ public class App extends AbstractVerticle {
 
     }
 
+    private JsonObject mySQLClientConfig = new JsonObject()
+            .put("host", "localhost")
+            .put("port", 3306)
+            .put("username", "rootpass")
+            .put("password", "plop")
+            .put("database", "vertx_assurance");
+
     @Override
     public void start() throws Exception {
         Router router = Router.router(vertx);
@@ -61,12 +68,7 @@ public class App extends AbstractVerticle {
 
         router.get("/list").handler(x -> { System.out.println("-- /list");
 
-            JsonObject mySQLClientConfig = new JsonObject()
-                    .put("host", "localhost")
-                    .put("port", 3306)
-                    .put("username", "rootpass")
-                    .put("password", "plop")
-                    .put("database", "vertx_assurance");
+
             AsyncSQLClient mySQLClient = MySQLClient.createShared(vertx, mySQLClientConfig);
 
             mySQLClient.getConnection(res -> { System.out.println("-- 1");
@@ -94,6 +96,7 @@ public class App extends AbstractVerticle {
                             System.out.println("-- 5");
                             // Failed!
                         }
+                        connection.close();
                         x.response().end(json.toString());
                     });
                 } else { System.out.println("-- 6 "+res.cause().getMessage());
@@ -102,6 +105,12 @@ public class App extends AbstractVerticle {
             });
         });
 
+    }
+
+    private boolean userExist(String user, String password){
+
+
+        return false;
     }
 
 }
