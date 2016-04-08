@@ -12,10 +12,4 @@ public class QuoteController {
 	public String indexView() {
 		return "quoteChoice";
 	}
-	
-	@RequestMapping(path="/quote/vehicule", method=RequestMethod.GET)
-	public ModelAndView vehiculeView() {
-		System.out.println("Coucou");
-		return new ModelAndView("createQuoteVehicleStep1");
-	}
 }
