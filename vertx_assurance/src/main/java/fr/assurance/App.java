@@ -2,6 +2,7 @@ package fr.assurance;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.asyncsql.AsyncSQLClient;
@@ -11,6 +12,7 @@ import io.vertx.ext.auth.jwt.JWTOptions;
 import io.vertx.ext.sql.ResultSet;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.JWTAuthHandler;
 
@@ -27,6 +29,15 @@ public class App extends AbstractVerticle {
 
     }
 
+    private JWTAuth authProvider;
+
+    private JsonObject mySQLClientConfig = new JsonObject()
+            .put("host", "localhost")
+            .put("port", 3306)
+            .put("username", "rootpass")
+            .put("password", "plop")
+            .put("database", "vertx_assurance");
+
     @Override
     public void start() throws Exception {
         Router router = Router.router(vertx);
@@ -41,7 +52,7 @@ public class App extends AbstractVerticle {
                 .put("type", "jceks")
                 .put("password", "secret"));
 
-        JWTAuth authProvider = JWTAuth.create(vertx, config);
+        authProvider = JWTAuth.create(vertx, config);
 
         router.route("/private/*").handler(JWTAuthHandler.create(authProvider));
 
@@ -49,24 +60,27 @@ public class App extends AbstractVerticle {
             JsonObject json = x.getBodyAsJson();
             String username = json.getString("username");
             String password = json.getString("password");
-            String token = "";
-            Boolean success = false;
-            if (username.equals("admin") && password.equals("admin")) {
-                success = true;
-                token = authProvider.generateToken(new JsonObject().put("username", username), new JWTOptions());
-            }
 
-            x.response().end("{success:'"+success+"', token:'"+token+"'}");
+            userExist(x, username, password);
         });
 
-        router.get("/list").handler(x -> { System.out.println("-- /list");
+        // Récupère tous les failure
+        router.route().failureHandler(x -> {
 
-            JsonObject mySQLClientConfig = new JsonObject()
-                    .put("host", "localhost")
-                    .put("port", 3306)
-                    .put("username", "rootpass")
-                    .put("password", "plop")
-                    .put("database", "vertx_assurance");
+        });
+
+        router.post("/list").consumes("application/json").handler(x -> { System.out.println("-- /list");
+
+            JsonObject json = x.getBodyAsJson();
+            String action = json.getString("action");
+            Integer marque = json.getInteger("marque");
+            Integer modele = json.getInteger("modele");
+            Integer chevaux = json.getInteger("chevaux");
+            Integer carburant = json.getInteger("carburant");
+
+
+
+            /*
             AsyncSQLClient mySQLClient = MySQLClient.createShared(vertx, mySQLClientConfig);
 
             mySQLClient.getConnection(res -> { System.out.println("-- 1");
@@ -94,14 +108,38 @@ public class App extends AbstractVerticle {
                             System.out.println("-- 5");
                             // Failed!
                         }
+                        connection.close();
                         x.response().end(json.toString());
                     });
                 } else { System.out.println("-- 6 "+res.cause().getMessage());
                     // Failed to get connection - deal with it
                 }
             });
+            */
         });
 
     }
 
+
+
+    private void userExist(RoutingContext x, String username, String password){
+
+        SqlQuery.execQuery("SELECT * FROM user WHERE name = ?", new JsonArray().add(username), result -> {
+            String token = "";
+            Boolean success = false;
+            if (result.succeeded()){
+                JsonObject json = result.result();
+                if(json.getInteger("numRows") == 1){
+                    if(json.getJsonArray("rows").getJsonObject(0).getString("password").equals(password)){
+                        success = true;
+                        token = authProvider.generateToken(new JsonObject().put("username", username), new JWTOptions());
+                    }
+                }
+                //x.response().end(result.result().toString());
+            }/* else {
+                x.fail(result.cause());
+            }*/
+            x.response().end("{success:'"+success+"', token:'"+token+"'}");
+        });
+    }
 }
