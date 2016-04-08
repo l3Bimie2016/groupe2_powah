@@ -11,12 +11,12 @@ public class VehiculeQuote extends Quote {
 	private Integer bonus_malus;
 	private String second_driver;
 	private Boolean in_garage;
+	private String garage_address;
 	private String contract_type;
 	private Float total_price;
 	
 	public VehiculeQuote() {
 		this.type = "VehiculeQuote";
-		this.done = false;
 	}
 	
 	public String getBrand() {
@@ -60,6 +60,12 @@ public class VehiculeQuote extends Quote {
 	}
 	public void setIn_garage(Boolean in_garage) {
 		this.in_garage = in_garage;
+	}
+	public String getGarage_address() {
+		return garage_address;
+	}
+	public void setGarage_address(String garage_address) {
+		this.garage_address = garage_address;
 	}
 	public String getContract_type() {
 		return contract_type;

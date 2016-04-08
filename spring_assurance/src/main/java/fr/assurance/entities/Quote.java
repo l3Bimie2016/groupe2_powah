@@ -10,6 +10,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 
 
 @Entity @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
@@ -25,6 +26,13 @@ public abstract class Quote {
 	protected Integer step;
 	protected Boolean done;
 
+	
+	@PrePersist
+	public void init() {
+		this.date = new Date();
+		this.done = false;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
