@@ -25,13 +25,6 @@ public class App extends AbstractVerticle {
 
     private JWTAuth authProvider;
 
-    private JsonObject mySQLClientConfig = new JsonObject()
-            .put("host", "localhost")
-            .put("port", 3306)
-            .put("username", "rootpass")
-            .put("password", "plop")
-            .put("database", "vertx_assurance");
-
     @Override
     public void start() throws Exception {
         Router router = Router.router(vertx);
