@@ -34,8 +34,8 @@ public class App extends AbstractVerticle {
     private JsonObject mySQLClientConfig = new JsonObject()
             .put("host", "localhost")
             .put("port", 3306)
-            .put("username", "rootpass")
-            .put("password", "plop")
+            .put("username", "root")
+            .put("password", "1234")
             .put("database", "vertx_assurance");
 
     @Override

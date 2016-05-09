@@ -28,19 +28,19 @@
         </div>
         <div>
         	<form:label path="brand">Marque : </form:label>
-        	<form:input path="brand"/>
+        	<form:select path="brand"></form:select>
         </div>
         <div>
         	<form:label path="model">Modèle : </form:label>
-        	<form:input path="model"/>
+        	<form:select path="model"></form:select>
         </div>
         <div>
         	<form:label path="type_fuel">Type Carburant : </form:label>
-        	<form:input path="type_fuel"/>
+        	<form:select path="type_fuel"></form:select>
         </div>
         <div>
         	<form:label path="fiscal_horse_power">Chevaux fiscaux : </form:label>
-        	<form:input path="fiscal_horse_power"/>
+        	<form:select path="fiscal_horse_power"></form:select>
         </div>
     	<input type="submit" value="Aller Ã  l'étape 2" />
 	</form:form>
