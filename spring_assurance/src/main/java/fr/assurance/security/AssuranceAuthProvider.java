@@ -48,7 +48,7 @@ public class AssuranceAuthProvider implements AuthenticationProvider{
 		System.out.println(response);
 		
 		appData.setToken(response);
-		
+
 		return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<GrantedAuthority>());
 		
 	}

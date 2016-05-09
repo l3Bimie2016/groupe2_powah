@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Devis en cours zblah</title>
+    <title>Devis en cours</title>
 </head>
 <body>
 <h1>Devis en cours</h1>

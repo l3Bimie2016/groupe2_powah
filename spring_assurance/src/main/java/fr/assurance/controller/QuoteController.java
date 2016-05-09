@@ -10,6 +10,7 @@ public class QuoteController {
 	
 	@RequestMapping(path="/quote", method=RequestMethod.GET)
 	public String indexView() {
+		System.out.println("-- quoteChoice");
 		return "quoteChoice";
 	}
 }
