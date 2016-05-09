@@ -10,7 +10,7 @@
 <body>
 <h1>Devis en cours</h1>
     <div>
-        <a href="/quote/vehicule">Nouveau devis pour véhicule</a>
+        <a href="/quote/vehicule.form">Nouveau devis pour véhicule</a>
         <br />
         <a href="/quote/house">Nouveau devis pour habitation</a>
     </div>

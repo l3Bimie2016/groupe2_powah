@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +10,7 @@
 <body>
 <h1>Devis en cours</h1>
     <div>
-        <a href="/quote/vehicule">Nouveau devis pour véhicule</a>
+        <a href="/quote/vehicule.form">Nouveau devis pour vÃ©hicule</a>
         <br />
         <a href="/quote/house">Nouveau devis pour habitation</a>
     </div>

@@ -63,8 +63,8 @@ public class App extends AbstractVerticle {
             System.out.println("-- fail !");
         });*/
 
-        //router.post("/private/list").consumes("application/json").handler(x -> {
-        router.post("/list").consumes("application/json").handler(x -> { System.out.println("-- /list");
+        router.post("/private/list").consumes("application/json").handler(x -> {
+        //router.post("/list").consumes("application/json").handler(x -> { System.out.println("-- /list");
 
             JsonObject json = x.getBodyAsJson();
             String action = json.getString("action");

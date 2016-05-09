@@ -9,7 +9,7 @@
     <title>Devis en cours</title>
 </head>
 <body>
-<form:form action="/wizard.form?_page=2" method="post" modelAttribute="modelWizard">
+<form:form action="/wizard.form?_page=2" method="post" modelAttribute="quoteVehicule">
     <form:label path="step1">CrÃ©er un devis habitation - Ãtape 1 : </form:label>
     <div><label>Nom du devis : <input type="text" name="quoteName"/></label></div>
     <div><label>PrÃ©nom : <input type="text" name="firstname"/></label></div>

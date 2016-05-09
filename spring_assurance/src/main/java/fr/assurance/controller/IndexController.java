@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import fr.assurance.bean.ApplicationData;
 
-@RestController
+@Controller
 public class IndexController {
 
 	@Autowired
@@ -17,6 +17,7 @@ public class IndexController {
 	
 	@RequestMapping(path = "/",method = RequestMethod.GET)
 	public String indexView() {
+		System.out.println("-- pouet");
 		return appData.getToken();
 	}
 }
