@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<script type="text/javascript" src="../js/jquery.js"></script>
     <meta charset="UTF-8">
     <title>Devis en cours</title>
 </head>
@@ -14,5 +15,12 @@
         <br />
         <a href="/quote/house">Nouveau devis pour habitation</a>
     </div>
+    <div id="test" style="width:100px; height:100px; background-color:red;" ></div>
+    
+    <script type="text/javascript">
+    $( document ).click(function() {
+    	  $( "#test" ).toggle( "explode" );
+    	});
+    </script>
 </body>
 </html>
