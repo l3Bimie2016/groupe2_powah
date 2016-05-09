@@ -42,7 +42,7 @@ public class VertXController {
         data.put("chevaux", listVehMod.getChevaux());
 
         String request = new Gson().toJson(data);
-        HttpEntity<String> entity = new HttpEntity<>(request, header);
+        HttpEntity<String> entity = new HttpEntity(request, header);
         RestTemplate restTemplate = new RestTemplate();
         String response = "";
         try{

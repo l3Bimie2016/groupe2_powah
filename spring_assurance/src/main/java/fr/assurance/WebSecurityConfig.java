@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Active ou déscative le csrl (si désactivé, plus besoin du champ hidden correspond dans la page de login
-        //http.csrf().disable();
+        http.csrf().disable();
 
         http.authorizeRequests().anyRequest().authenticated().and().formLogin().permitAll();
     }

@@ -28,21 +28,28 @@
         </div>
         <div>
         	<form:label path="brand">Marque : </form:label>
-        	<form:input path="brand"/>
+        	<!--<form:select path="brand"></form:select>-->
+			<select id="brand" name="brand" onchange="selectBrand(this.value)"><option /></select>
         </div>
         <div>
         	<form:label path="model">Modèle : </form:label>
-        	<form:input path="model"/>
+			<!--<form:select path="model"></form:select>-->
+			<select id="model" name="model" ><option /></select>
         </div>
         <div>
         	<form:label path="type_fuel">Type Carburant : </form:label>
-        	<form:input path="type_fuel"/>
+        	<!--<form:select path="type_fuel"></form:select>-->
+			<select id="type_fuel" name="type_fuel" ><option /></select>
         </div>
         <div>
         	<form:label path="fiscal_horse_power">Chevaux fiscaux : </form:label>
-        	<form:input path="fiscal_horse_power"/>
+        	<!--<form:select path="fiscal_horse_power"></form:select>-->
+			<select id="fiscal_horse_power" name="fiscal_horse_power" ><option /></select>
         </div>
     	<input type="submit" value="Aller Ã  l'étape 2" />
 	</form:form>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="../js/listVehicule.js"></script>
 </body>
 </html>
