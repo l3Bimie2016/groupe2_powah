@@ -38,7 +38,6 @@ public class QuoteVehiculeController {
 		
 		vehiculeQuote.setStep(currentPage);
 		vehiculeQuote = quoteManager.save(vehiculeQuote);
-		System.out.println(vehiculeQuote.getDone());
 		
 		return new ModelAndView(pageViews[currentPage - 1]);
 	}
@@ -48,6 +47,7 @@ public class QuoteVehiculeController {
 			SessionStatus status) {
 		vehiculeQuote.setDone(true);
 		status.setComplete();
-		return new ModelAndView("VehiculeQuoteSuccessView");
+
+		return new ModelAndView("vehiculeQuoteSuccess");
 	}
 }
