@@ -11,6 +11,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.assurance.dao.QuoteRepository;
+import fr.assurance.entities.HouseQuote;
 import fr.assurance.entities.VehiculeQuote;
 
 @Controller
@@ -50,5 +51,14 @@ public class QuoteVehiculeController {
 		status.setComplete();
 
 		return new ModelAndView("vehiculeQuoteSuccess");
+	}
+	
+	@RequestMapping(path="/cancelVehiculeQuote", method=RequestMethod.POST)
+	public ModelAndView cancel(@ModelAttribute("vehiculeQuote") VehiculeQuote vehiculeQuote) {
+		if (vehiculeQuote.getId() != null) {
+			quoteManager.delete(vehiculeQuote.getId());
+		}
+		
+		return new ModelAndView("index");
 	}
 }

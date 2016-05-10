@@ -16,5 +16,9 @@
         </div>
 	    <input type="submit" value="Aller Ã  l'étape 3" />
 	</form:form>
+	
+	<form:form action="/quote/vehicule.form/cancelVehiculeQuote" method="post" modelAttribute="vehiculeQuote">
+		<input type="submit" value="Annuler" />
+	</form:form>
 </body>
 </html>
