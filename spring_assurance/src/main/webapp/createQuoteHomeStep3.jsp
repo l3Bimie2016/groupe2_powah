@@ -29,5 +29,9 @@
         </div>
     	<input type="submit" value="Aller Ã  l'étape 4" />
 	</form:form>
+	
+	<form:form action="/quote/home.form/cancelHomeQuote" method="post" modelAttribute="homeQuote">
+		<input type="submit" value="Annuler" />
+	</form:form>
 </body>
 </html>

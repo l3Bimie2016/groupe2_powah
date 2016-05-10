@@ -28,6 +28,10 @@
         </div>
     	<input type="submit" value="Aller Ã  l'étape 2" />
 	</form:form>
+	
+	<form:form action="/quote/home.form/cancelHomeQuote" method="post" modelAttribute="homeQuote">
+		<input type="submit" value="Annuler" />
+	</form:form>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="../js/listVehicule.js"></script>
