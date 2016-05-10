@@ -43,7 +43,7 @@ public class App extends AbstractVerticle {
 
         router.route("/private/*").handler(JWTAuthHandler.create(authProvider));
 
-        router.post("/login").consumes("application/json").handler(x -> { System.out.println("-- /login");
+        router.post("/login").consumes("application/json").handler(x -> { //System.out.println("-- /login");
             JsonObject json = x.getBodyAsJson();
             String username = json.getString("username");
             String password = json.getString("password");
@@ -89,6 +89,42 @@ public class App extends AbstractVerticle {
             getList(x, sql, params);
         });
 
+        //router.post("/private/vehSummary").consumes("application/json").handler(x -> {
+        router.post("/vehSummary").consumes("application/json").handler(x -> {
+            JsonObject json = x.getBodyAsJson();
+            Integer marque = json.getInteger("marque");
+            Integer modele = json.getInteger("modele");
+            Integer chevaux = json.getInteger("chevaux");
+            Integer carburant = json.getInteger("carburant");
+            String[] sql = new String[4];
+            JsonArray[] params = new JsonArray[4];
+            sql[0] = "select name from marque where id = ?";
+            sql[1] = "select name from modele where id = ?";
+            sql[2] = "select name from chevaux_fiscaux where id = ?";
+            sql[3] = "select name from carburant where id = ?";
+            params[0] = new JsonArray().add(marque);
+            params[1] = new JsonArray().add(modele);
+            params[2] = new JsonArray().add(chevaux);
+            params[3] = new JsonArray().add(carburant);
+            getNamesVehicule(x, sql, params);
+        });
+    }
+
+    private void getNamesVehicule(RoutingContext x, String[] sql, JsonArray[] params){
+        SqlQuery.execQuery(sql[0], params[0], resultMarque -> {
+            SqlQuery.execQuery(sql[1], params[1], resultModel -> {
+                SqlQuery.execQuery(sql[2], params[2], resultHorse -> {
+                    SqlQuery.execQuery(sql[3], params[3], resultFuel -> {
+                        x.response().end(new JsonObject().put("success", true)
+                                .put("marque", resultMarque.result().getJsonArray("results").getJsonArray(0).getString(0))
+                                .put("modele", resultModel.result().getJsonArray("results").getJsonArray(0).getString(0))
+                                .put("chevaux", resultHorse.result().getJsonArray("results").getJsonArray(0).getString(0))
+                                .put("carburant", resultFuel.result().getJsonArray("results").getJsonArray(0).getString(0))
+                                .put("prix", 3000).toString());
+                    });
+                });
+            });
+        });
     }
 
     private void getList(RoutingContext x, String sql, JsonArray params){
