@@ -85,7 +85,7 @@ public class App extends AbstractVerticle {
                 sql = "select distinct id_marque, name from voiture " +
                         "inner join marque m on id_marque = m.id";
             }
-            System.out.println("- pre getList");
+            //System.out.println("- pre getList");
             getList(x, sql, params);
         });
 

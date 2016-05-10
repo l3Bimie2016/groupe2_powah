@@ -1,39 +1,22 @@
-/*
-$.post("http://localhost:8080/listVehicule", {"action":"modele", "marque":1, "modele":0, "chevaux":0},
-    function( data ) {
-        console.log( data.success );
-        console.log( data.list );
-    }, "json");
-*/
-/*$.ajax({
-    url : 'http://localhost:8080/listVehicule',
-    type : 'POST',
-    headers : {'Content-Type':'application/json'},
-    data : '{"action":"marque", "marque":0, "modele":0, "chevaux":0}',
-    dataType : 'json',
-    success : function(data, statut){
-        console.log( data.success );
-        console.log( data.list );
-        if(data.success){
-            $.each(data.list, function(index, item) {
-                $('#brand').append($('<option>').text(item.name).val(item.id_marque));
-            });
-        }
-    },
-    error : function(resultat, statut, erreur){
-        console.log("resultat !! "+resultat);
-        console.log("statut !! "+statut);
-        console.log("erreur !! "+erreur);
-    }
-});*/
+
+var brandSelected, modelSelected, horseSelected;
 
 sendList("marque", 0, 0, 0, recieveBrand);
 
 function selectBrand (value){
-    console.log("--- value : "+value);
-    if(value) {
-        sendList("modele", value, 0, 0, recieveModel);
-    }
+    brandSelected = value;
+    emptySelect("#model"); emptySelect("#fiscal_horse_power"); emptySelect("#type_fuel");
+    if(value) sendList("modele", brandSelected, 0, 0, recieveModel);
+}
+function selectModel (value){
+    modelSelected = value;
+    emptySelect("#fiscal_horse_power"); emptySelect("#type_fuel");
+    if(value) sendList("chevaux", brandSelected, modelSelected, 0, recieveHorse);
+}
+function selectHorse (value){
+    horseSelected = value;
+    emptySelect("#type_fuel");
+    if(value) sendList("carburant", brandSelected, modelSelected, horseSelected, recieveFuel);
 }
 
 function sendList(action, valueBrand, valueModel, valueHorse, recieveJson){
@@ -44,13 +27,7 @@ function sendList(action, valueBrand, valueModel, valueHorse, recieveJson){
         data: '{"action":"'+action+'", "marque":' + valueBrand + ', "modele":'+valueModel+', "chevaux":'+valueHorse+'}',
         dataType: 'json',
         success: function (data, statut) {
-            console.log(data.success);
-            console.log(data.list);
-            $('#model').empty();
-            $('#model').append($('<option>'));
-            if (data.success) {
-                recieveJson(data.list);
-            }
+            if (data.success) recieveJson(data.list);
         }
     });
 }
@@ -65,4 +42,21 @@ function recieveModel(json){
     $.each(json, function (index, item) {
         $('#model').append($('<option>').text(item.name).val(item.id_modele));
     });
+}
+
+function recieveHorse(json){
+    $.each(json, function (index, item) {
+        $('#fiscal_horse_power').append($('<option>').text(item.name).val(item.id_chevaux_fiscaux));
+    });
+}
+
+function recieveFuel(json){
+    $.each(json, function (index, item) {
+        $('#type_fuel').append($('<option>').text(item.name).val(item.id_carburant));
+    });
+}
+
+function emptySelect(name){
+    $(name).empty();
+    $(name).append($('<option>'));
 }

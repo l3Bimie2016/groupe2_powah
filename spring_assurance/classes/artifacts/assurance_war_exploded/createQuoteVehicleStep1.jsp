@@ -34,18 +34,18 @@
         <div>
         	<form:label path="model">Modèle : </form:label>
 			<!--<form:select path="model"></form:select>-->
-			<select id="model" name="model" ><option /></select>
-        </div>
-        <div>
-        	<form:label path="type_fuel">Type Carburant : </form:label>
-        	<!--<form:select path="type_fuel"></form:select>-->
-			<select id="type_fuel" name="type_fuel" ><option /></select>
+			<select id="model" name="model" onchange="selectModel(this.value)"><option /></select>
         </div>
         <div>
         	<form:label path="fiscal_horse_power">Chevaux fiscaux : </form:label>
         	<!--<form:select path="fiscal_horse_power"></form:select>-->
-			<select id="fiscal_horse_power" name="fiscal_horse_power" ><option /></select>
+			<select id="fiscal_horse_power" name="fiscal_horse_power" onchange="selectHorse(this.value)"><option /></select>
         </div>
+		<div>
+			<form:label path="type_fuel">Type Carburant : </form:label>
+			<!--<form:select path="type_fuel"></form:select>-->
+			<select id="type_fuel" name="type_fuel" ><option /></select>
+		</div>
     	<input type="submit" value="Aller Ã  l'étape 2" />
 	</form:form>
 
