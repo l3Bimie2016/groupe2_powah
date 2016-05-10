@@ -1,8 +1,4 @@
-/.idea
 /bin/
-/spring_assurance/.idea
-/vertx_assurance/.idea
-/spring_assurance/target/
-/vertx_assurance/target/
-/spring_assurance/classes/
-/vertx_assurance/classes/
+**/.idea
+**/target
+**/classes
