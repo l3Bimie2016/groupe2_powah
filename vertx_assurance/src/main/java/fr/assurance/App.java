@@ -100,7 +100,7 @@ public class App extends AbstractVerticle {
                 JsonObject json = result.result();
                 list = json.getJsonArray("rows");
             }
-            x.response().end("{success:'"+success+"', list:"+list.toString()+"}");
+            x.response().end("{\"success\":"+success+", \"list\":"+list.toString()+"}");
         });
     }
 
