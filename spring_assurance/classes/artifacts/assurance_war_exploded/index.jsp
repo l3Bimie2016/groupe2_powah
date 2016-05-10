@@ -13,14 +13,7 @@
     <div>
         <a href="/quote/vehicule.form">Nouveau devis pour véhicule</a>
         <br />
-        <a href="/quote/house">Nouveau devis pour habitation</a>
+        <a href="/quote/home.form">Nouveau devis pour habitation</a>
     </div>
-    <div id="test" style="width:100px; height:100px; background-color:red;" ></div>
-    
-    <script type="text/javascript">
-    $( document ).click(function() {
-    	  $( "#test" ).toggle( "explode" );
-    	});
-    </script>
 </body>
 </html>

@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fr.assurance.bean.ApplicationData;
 import fr.assurance.controller.model.ListVehiculeModel;
+import fr.assurance.controller.model.VehSummaryMod;
+import fr.assurance.entities.VehiculeQuote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -71,6 +73,42 @@ public class VertXService {
         appData.setToken(response);
 
         return new JsonParser().parse(response).getAsJsonObject().get("success").getAsBoolean();
+    }
+
+    public VehSummaryMod getSummary(VehiculeQuote vq){
+
+        VehSummaryMod vehsum = new VehSummaryMod(vq);
+
+        String response = jsonNoSuccess;
+
+        JsonObject json = new JsonParser().parse(appData.getToken()).getAsJsonObject();
+        if(json.get("success").getAsBoolean()) {
+            HttpHeaders header = new HttpHeaders();
+            String token = json.get("token").getAsString();
+            header.set("Authorization", "Bearer " + token);
+            header.setContentType(MediaType.APPLICATION_JSON);
+
+            JsonObject request = new JsonObject();
+            request.addProperty("marque", Integer.valueOf(vq.getBrand()));
+            request.addProperty("modele", Integer.valueOf(vq.getBrand()));
+            request.addProperty("chevaux", Integer.valueOf(vq.getBrand()));
+            request.addProperty("carburant", Integer.valueOf(vq.getBrand()));
+            HttpEntity<String> entity = new HttpEntity(request.toString(), header);
+            RestTemplate restTemplate = new RestTemplate();
+
+            try {
+                response = restTemplate.postForObject(uri + "/private/vehSummary", entity, String.class);
+                JsonObject jsonResponse = new JsonParser().parse(response).getAsJsonObject();
+                if(jsonResponse.get("success").getAsBoolean()){
+                    vehsum.setBrand(jsonResponse.get("marque").getAsString());
+                    vehsum.setModel(jsonResponse.get("modele").getAsString());
+                    vehsum.setFiscal_horse_power(jsonResponse.get("chevaux").getAsString());
+                    vehsum.setType_fuel(jsonResponse.get("carburant").getAsString());
+                    vehsum.setTotal_price(jsonResponse.get("prix").getAsFloat());
+                }
+            } catch (Exception e) { }
+        }
+        return vehsum;
     }
 
 }
