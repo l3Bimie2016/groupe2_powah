@@ -1,8 +1,23 @@
-<form:form action="/wizard.form?_finish=1" method="post" modelAttribute="modelWizard">
-    <form:label path="step4">Créer un devis habitation - Étape 4 : </form:label>
-    <div>Résumé : </div>
-    <div><label>Formule : <input type="radio" value="1"/>1<input type="radio" value="2"/>2</label></div>
-    <div>Prix : </div>
-    <form:input path="step4" />
-    <input type="submit" value="Finaliser" />
-</form:form>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Création d'un devis d'habitation étape 4</title>
+</head>
+<body>
+	<form:form action="/quote/home.form?_finish=1" method="post" modelAttribute="homeQuote">
+        <div>
+        	<form:label path="formula">Formule : </form:label>
+        	<form:select path="formula">
+        		<option value="A">Formule A</option>
+        		<option value="B">Formule B</option>
+        	</form:select>
+        </div>
+    	<input type="submit" value="Voir le résumé du devis" />
+	</form:form>
+</body>
+</html>

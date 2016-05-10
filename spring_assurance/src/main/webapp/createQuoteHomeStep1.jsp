@@ -6,18 +6,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Devis en cours</title>
+    <title>Création d'un devis d'habitation étape 1</title>
 </head>
 <body>
-<form:form action="/wizard.form?_page=2" method="post" modelAttribute="quoteVehicule">
-    <form:label path="step1">CrÃ©er un devis habitation - Ãtape 1 : </form:label>
-    <div><label>Nom du devis : <input type="text" name="quoteName"/></label></div>
-    <div><label>PrÃ©nom : <input type="text" name="firstname"/></label></div>
-    <div><label>Nom : <input type="text" name="name"/></label></div>
-    <div><label>Type habitation : <input type="text" name="houseType"/></label></div>
-    <div><label>Surface : <input type="text" name="surface"/></label></div>
-    <form:input path="step1" />
-    <input type="submit" value="Aller Ã  l'Ã©tape 2" />
-</form:form>
+	<form:form action="/quote/home.form?_page=2" method="post" modelAttribute="homeQuote">
+        <div>
+        	<form:label path="name">Nom du devis : </form:label>
+        	<form:input path="name" />
+        </div>
+        <div>
+        	<form:label path="house_type">Type habitation : </form:label>
+        	<form:select path="house_type">
+        		<option value="house">Maison</option>
+        		<option value="appartment">Appartement</option>
+        		<option value="studio">Studio</option>
+        	</form:select>
+        </div>
+        <div>
+        	<form:label path="surface">Surface : </form:label>
+        	<form:input path="surface"/>
+        </div>
+    	<input type="submit" value="Aller Ã  l'étape 2" />
+	</form:form>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="../js/listVehicule.js"></script>
 </body>
 </html>

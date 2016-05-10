@@ -11,44 +11,44 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.assurance.dao.QuoteRepository;
-import fr.assurance.entities.VehiculeQuote;
+import fr.assurance.entities.HouseQuote;;
 
 @Controller
-@RequestMapping("/quote/vehicule.form")
-@SessionAttributes("vehiculeQuote")
-public class QuoteVehiculeController {
+@RequestMapping("/quote/home.form")
+@SessionAttributes("homeQuote")
+public class QuoteHomeController {
 	@Autowired
 	private QuoteRepository quoteManager;
 	
 	private String[] pageViews = new String[] {
-			"createQuoteVehicleStep1",
-			"createQuoteVehicleStep2",
-			"createQuoteVehicleStep3",
-			"createQuoteVehicleStep4"
+			"createQuoteHomeStep1",
+			"createQuoteHomeStep2",
+			"createQuoteHomeStep3",
+			"createQuoteHomeStep4"
 	};
 	
 	@RequestMapping
 	public ModelAndView initialQuoteVehicule() {
-		return new ModelAndView("createQuoteVehicleStep1", "vehiculeQuote", new VehiculeQuote());
+		return new ModelAndView("createQuoteHomeStep1", "homeQuote", new HouseQuote());
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ModelAndView processPage(@RequestParam("_page") int currentPage, 
-			@ModelAttribute("vehiculeQuote") VehiculeQuote vehiculeQuote) {
+			@ModelAttribute("homeQuote") HouseQuote homeQuote) {
 		
-		vehiculeQuote.setStep(currentPage);
-		vehiculeQuote = quoteManager.save(vehiculeQuote);
+		homeQuote.setStep(currentPage);
+		homeQuote = quoteManager.save(homeQuote);
 		
 		return new ModelAndView(pageViews[currentPage - 1]);
 	}
 	
 	@RequestMapping(params="_finish")
-	public ModelAndView processFinish(@ModelAttribute("vehiculeQuote") VehiculeQuote vehiculeQuote,
+	public ModelAndView processFinish(@ModelAttribute("homeQuote") HouseQuote homeQuote,
 			SessionStatus status) {
-		vehiculeQuote.setDone(true);
-		quoteManager.save(vehiculeQuote);
+		homeQuote.setDone(true);
+		quoteManager.save(homeQuote);
 		status.setComplete();
 
-		return new ModelAndView("vehiculeQuoteSuccess");
+		return new ModelAndView("homeQuoteSuccess");
 	}
 }
