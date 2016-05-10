@@ -12,7 +12,10 @@
 	<form:form action="/quote/vehicule.form?_finish=1" method="post" modelAttribute="vehiculeQuote">
     	<div>
         	<form:label path="contract_type">Type de contrat : </form:label>
-        	<form:select path="contract_type"></form:select>
+        	<form:select path="contract_type">
+        		<option value="A">Contrat A</option>
+        		<option value="B">Contrat B</option>
+        	</form:select>
         </div>
 	    <input type="submit" value="Finaliser" />
 	</form:form>
