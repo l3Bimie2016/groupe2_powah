@@ -49,7 +49,7 @@ public class QuoteHomeController {
 		quoteService.save(homeQuote);
 		status.setComplete();
 
-		return new ModelAndView("homeQuoteSuccess");
+		return new ModelAndView("redirect:/homeQuoteSuccess");
 	}
 	
 	@RequestMapping(path="/cancelHomeQuote", method=RequestMethod.POST)

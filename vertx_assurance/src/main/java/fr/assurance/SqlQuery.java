@@ -18,8 +18,8 @@ public class SqlQuery {
     private static JsonObject mySQLClientConfig = new JsonObject()
             .put("host", "localhost")
             .put("port", 3306)
-            .put("username", "root")
-            .put("password", "1234")
+            .put("username", "rootpass")
+            .put("password", "plop")
             .put("database", "vertx_assurance");
 
     public static void execQuery(String querySql, JsonArray params, Handler<AsyncResult<JsonObject>> handler){
