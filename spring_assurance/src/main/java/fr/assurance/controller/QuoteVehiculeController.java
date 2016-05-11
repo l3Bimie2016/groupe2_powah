@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.assurance.controller.model.VehSummaryMod;
 import fr.assurance.dao.QuoteRepository;
+import fr.assurance.entities.HouseQuote;
 import fr.assurance.entities.VehiculeQuote;
+import fr.assurance.service.VertXService;
 
 @Controller
 @RequestMapping("/quote/vehicule.form")
@@ -48,8 +51,23 @@ public class QuoteVehiculeController {
 			SessionStatus status) {
 		vehiculeQuote.setDone(true);
 		quoteServive.save(vehiculeQuote);
+		VertXService vertx = new VertXService();
+		VehSummaryMod vehSummary = vertx.getSummary(vehiculeQuote);
+		vehiculeQuote.setBrand(vehSummary.getBrand());
+		vehiculeQuote.setModel(vehSummary.getModel());
+		vehiculeQuote.setFiscal_horse_power(vehSummary.getFiscal_horse_power());
+		vehiculeQuote.setType_fuel(vehSummary.getType_fuel());
 		status.setComplete();
 
 		return new ModelAndView("vehiculeQuoteSuccess");
+	}
+	
+	@RequestMapping(path="/cancelVehiculeQuote", method=RequestMethod.POST)
+	public ModelAndView cancel(@ModelAttribute("vehiculeQuote") VehiculeQuote vehiculeQuote) {
+		if (vehiculeQuote.getId() != null) {
+			quoteServive.delete(vehiculeQuote.getId());
+		}
+		
+		return new ModelAndView("index");
 	}
 }

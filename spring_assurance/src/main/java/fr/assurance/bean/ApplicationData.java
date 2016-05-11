@@ -11,14 +11,21 @@ import org.springframework.stereotype.Component;
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS, scopeName = "session")
 public class ApplicationData {
     private String token;
+    private Integer currentId;
 
-    public String getToken() {
+	public String getToken() {
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
     }
+    
+    public Integer getCurrentId() {
+		return currentId;
+	}
 
-
+	public void setCurrentId(Integer currentId) {
+		this.currentId = currentId;
+	}
 }

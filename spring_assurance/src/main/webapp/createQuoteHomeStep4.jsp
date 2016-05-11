@@ -19,5 +19,9 @@
         </div>
     	<input type="submit" value="Voir le résumé du devis" />
 	</form:form>
+	
+	<form:form action="/quote/home.form/cancelHomeQuote" method="post" modelAttribute="homeQuote">
+		<input type="submit" value="Annuler" />
+	</form:form>
 </body>
 </html>

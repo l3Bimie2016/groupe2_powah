@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.assurance.entities.HouseQuote;;
+import fr.assurance.entities.HouseQuote;
 
 @Controller
 @RequestMapping("/quote/home.form")
@@ -50,5 +50,14 @@ public class QuoteHomeController {
 		status.setComplete();
 
 		return new ModelAndView("homeQuoteSuccess");
+	}
+	
+	@RequestMapping(path="/cancelHomeQuote", method=RequestMethod.POST)
+	public ModelAndView cancel(@ModelAttribute("homeQuote") HouseQuote houseQuote) {
+		if (houseQuote.getId() != null) {
+			quoteService.delete(houseQuote.getId());
+		}
+		
+		return new ModelAndView("index");
 	}
 }

@@ -22,4 +22,8 @@ public class QuoteService {
     public HouseQuote save(HouseQuote quote) {
         return quoteRepo.save(quote);
     }
+
+    public void delete(Integer id) {
+        quoteRepo.delete(id);
+    }
 }
