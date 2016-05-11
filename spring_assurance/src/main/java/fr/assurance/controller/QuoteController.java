@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import fr.assurance.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,10 +19,9 @@ import fr.assurance.dao.QuoteRepository;
 import fr.assurance.entities.Quote;
 
 @Controller
-@SessionAttributes("quote")
 public class QuoteController {
 	@Autowired
-	private QuoteRepository quoteManager;
+	private QuoteService quoteManager;
 	
 	@RequestMapping(path="/quote", method=RequestMethod.GET)
 	public String indexView() {
@@ -30,7 +30,6 @@ public class QuoteController {
 	}
 	
 	@RequestMapping(path="/quote/inProgress", method=RequestMethod.GET)
-	@ModelAttribute("quote")
 	public ModelAndView quotesInProgress() {
 
 		List<Quote> quotesList = quoteManager.findByDone(false);
