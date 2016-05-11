@@ -64,6 +64,7 @@ public class QuoteVehiculeController {
 		quote.setBrand(vehSummary.getBrand());
 		quote.setModel(vehSummary.getModel());
 		quote.setFiscal_horse_power(vehSummary.getFiscal_horse_power());
+		quote.setTotal_price(vehSummary.getTotal_price());
 		quote.setType_fuel(vehSummary.getType_fuel());
 		status.setComplete();
 

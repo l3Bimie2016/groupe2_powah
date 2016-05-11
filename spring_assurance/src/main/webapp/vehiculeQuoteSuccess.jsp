@@ -11,7 +11,7 @@
 <body>
 	<p>Votre devis de véhicule a bien été traîté.</p>
 	<h1>Résumé</h1>
-	<form:form modelAttribute="vehiculeQuote">
+	<form:form modelAttribute="quote">
 		<h1><c:out value="${ quote.name }"></c:out></h1>
 		<div>
         	<form:label path="id">
