@@ -2,17 +2,25 @@ package fr.assurance.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.assurance.dao.QuoteRepository;
 import fr.assurance.entities.Quote;
 
 @Controller
+@SessionAttributes("quote")
 public class QuoteController {
+	@Autowired
 	private QuoteRepository quoteManager;
 	
 	@RequestMapping(path="/quote", method=RequestMethod.GET)
@@ -22,12 +30,20 @@ public class QuoteController {
 	}
 	
 	@RequestMapping(path="/quote/inProgress", method=RequestMethod.GET)
+	@ModelAttribute("quote")
 	public ModelAndView quotesInProgress() {
+
 		List<Quote> quotesList = quoteManager.findByDone(false);
-		for (Quote quote : quotesList) {
-			System.out.println(quote.getId());
-		}
 		
-		return new ModelAndView("quotesInProgress");
+		return new ModelAndView("inProgress", "quotesList", quotesList);
+	}
+	
+	@RequestMapping(path="/quote/resume")
+	public ModelAndView quoteResume(@RequestParam("idQuote") Integer idQuote, HttpServletRequest request) {
+		Quote quote = quoteManager.findOne(idQuote);
+		request.getSession().setAttribute("quote", quote);
+		System.out.println("QuoteId: " + quote.getId());
+		System.out.println("QuoteStep: " + quote.getStep());
+		return new ModelAndView("redirect:/quote/vehicule.form?_page=" + quote.getStep(), "quote", quote);
 	}
 }

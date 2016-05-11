@@ -9,15 +9,20 @@
     <title>Création d'un devis de véhicule étape 2</title>
 </head>
 <body>
-	<form:form action="/quote/vehicule.form?_page=3" method="post" modelAttribute="vehiculeQuote">
+	<form:form action="/quote/vehicule.form?_page=3" method="post" modelAttribute="quote">
+	    <div>
+        	<form:label path="id">
+        		<c:out value="${ quote.id }"></c:out>
+        	</form:label>
+        </div>
 	    <div>
         	<form:label path="bonus_malus">Bonus - Malus : </form:label>
-        	<form:input path="name"/>
+        	<form:input path="bonus_malus"/>
         </div>
 	    <input type="submit" value="Aller Ã  l'étape 3" />
 	</form:form>
 	
-	<form:form action="/quote/vehicule.form/cancelVehiculeQuote" method="post" modelAttribute="vehiculeQuote">
+	<form:form action="/quote/vehicule.form/cancelVehiculeQuote" method="post" modelAttribute="quote">
 		<input type="submit" value="Annuler" />
 	</form:form>
 </body>
