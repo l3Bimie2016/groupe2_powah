@@ -15,7 +15,7 @@ import fr.assurance.entities.HouseQuote;
 
 @Controller
 @RequestMapping("/quote/home.form")
-@SessionAttributes("homeQuote")
+@SessionAttributes("quote")
 public class QuoteHomeController {
 	@Autowired
 	private QuoteService quoteService;
@@ -29,33 +29,34 @@ public class QuoteHomeController {
 	
 	@RequestMapping
 	public ModelAndView initialQuoteVehicule() {
-		return new ModelAndView("createQuoteHomeStep1", "homeQuote", new HouseQuote());
+		return new ModelAndView("createQuoteHomeStep1", "quote", new HouseQuote());
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ModelAndView processPage(@RequestParam("_page") int currentPage, 
-			@ModelAttribute("homeQuote") HouseQuote homeQuote) {
-		
-		homeQuote.setStep(currentPage);
-		homeQuote = quoteService.save(homeQuote);
+			@ModelAttribute("quote") HouseQuote quote) {
+
+		quote.setStep(currentPage);
+		quote = quoteService.save(quote);
 		
 		return new ModelAndView(pageViews[currentPage - 1]);
 	}
 	
 	@RequestMapping(params="_finish")
-	public ModelAndView processFinish(@ModelAttribute("homeQuote") HouseQuote homeQuote,
+	public ModelAndView processFinish(@ModelAttribute("quote") HouseQuote quote,
 			SessionStatus status) {
-		homeQuote.setDone(true);
-		quoteService.save(homeQuote);
+		
+		quote.setDone(true);
+		quoteService.save(quote);
 		status.setComplete();
 
-		return new ModelAndView("homeQuoteSuccess");
+		return new ModelAndView("redirect:/homeQuoteSuccess");
 	}
 	
 	@RequestMapping(path="/cancelHomeQuote", method=RequestMethod.POST)
-	public ModelAndView cancel(@ModelAttribute("homeQuote") HouseQuote houseQuote) {
-		if (houseQuote.getId() != null) {
-			quoteService.delete(houseQuote.getId());
+	public ModelAndView cancel(@ModelAttribute("quote") HouseQuote quote) {
+		if (quote.getId() != null) {
+			quoteService.delete(quote.getId());
 		}
 		
 		return new ModelAndView("index");

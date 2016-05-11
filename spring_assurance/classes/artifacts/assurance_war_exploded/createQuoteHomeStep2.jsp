@@ -9,7 +9,12 @@
     <title>Création d'un devis d'habitation étape 2</title>
 </head>
 <body>
-	<form:form action="/quote/home.form?_page=3" method="post" modelAttribute="homeQuote">
+	<form:form action="/quote/home.form?_page=3" method="post" modelAttribute="quote">
+        <div>
+        	<form:label path="id">
+        		<c:out value="${ quote.id }"></c:out>
+        	</form:label>
+        </div>
         <div>
         	<form:label path="nb_rooms">Nombre de pièces : </form:label>
         	<form:input path="nb_rooms" />
@@ -27,6 +32,10 @@
         	<form:checkbox path="garage" />
         </div>
     	<input type="submit" value="Aller Ã  l'étape 3" />
+	</form:form>
+	
+	<form:form action="/quote/home.form/cancelHomeQuote" method="post" modelAttribute="quote">
+		<input type="submit" value="Annuler" />
 	</form:form>
 </body>
 </html>

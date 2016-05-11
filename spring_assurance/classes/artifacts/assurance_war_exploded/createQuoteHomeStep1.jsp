@@ -9,7 +9,7 @@
     <title>Création d'un devis d'habitation étape 1</title>
 </head>
 <body>
-	<form:form action="/quote/home.form?_page=2" method="post" modelAttribute="homeQuote">
+	<form:form action="/quote/home.form?_page=2" method="post" modelAttribute="quote">
         <div>
         	<form:label path="name">Nom du devis : </form:label>
         	<form:input path="name" />
@@ -27,6 +27,10 @@
         	<form:input path="surface"/>
         </div>
     	<input type="submit" value="Aller Ã  l'étape 2" />
+	</form:form>
+	
+	<form:form action="/quote/home.form/cancelHomeQuote" method="post" modelAttribute="quote">
+		<input type="submit" value="Annuler" />
 	</form:form>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

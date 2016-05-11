@@ -9,7 +9,12 @@
     <title>Création d'un devis d'habitation étape 3</title>
 </head>
 <body>
-	<form:form action="/quote/home.form?_page=4" method="post" modelAttribute="homeQuote">
+	<form:form action="/quote/home.form?_page=4" method="post" modelAttribute="quote">
+        <div>
+        	<form:label path="id">
+        		<c:out value="${ quote.id }"></c:out>
+        	</form:label>
+        </div>
         <div>
         	<form:label path="garden_area">Surface du jardin : </form:label>
         	<form:input path="garden_area" />
@@ -28,6 +33,10 @@
         	</form:select>
         </div>
     	<input type="submit" value="Aller Ã  l'étape 4" />
+	</form:form>
+	
+	<form:form action="/quote/home.form/cancelHomeQuote" method="post" modelAttribute="quote">
+		<input type="submit" value="Annuler" />
 	</form:form>
 </body>
 </html>

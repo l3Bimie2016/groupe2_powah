@@ -9,7 +9,7 @@
     <title>Création d'un devis de véhicule étape 1</title>
 </head>
 <body>
-	<form:form action="/quote/vehicule.form?_page=2" method="post" modelAttribute="vehiculeQuote">
+	<form:form action="/quote/vehicule.form?_page=2" method="post" modelAttribute="quote">
         <div>
         	<form:label path="name">Nom du devis : </form:label>
         	<form:input path="name"/>
@@ -47,6 +47,10 @@
 			<select id="type_fuel" name="type_fuel" ><option /></select>
 		</div>
     	<input type="submit" value="Aller Ã  l'étape 2" />
+	</form:form>
+
+	<form:form action="/quote/vehicule.form/cancelVehiculeQuote" method="post" modelAttribute="quote">
+		<input type="submit" value="Annuler" />
 	</form:form>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
