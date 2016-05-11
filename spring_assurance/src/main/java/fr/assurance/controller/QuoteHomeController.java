@@ -34,7 +34,7 @@ public class QuoteHomeController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ModelAndView processPage(@RequestParam("_page") int currentPage, 
-			@ModelAttribute("homeQuote") HouseQuote quote) {
+			@ModelAttribute("quote") HouseQuote quote) {
 
 		quote.setStep(currentPage);
 		quote = quoteService.save(quote);

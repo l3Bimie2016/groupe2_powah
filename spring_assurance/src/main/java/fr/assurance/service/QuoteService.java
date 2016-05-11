@@ -4,6 +4,9 @@ import fr.assurance.dao.QuoteRepository;
 import fr.assurance.entities.HouseQuote;
 import fr.assurance.entities.Quote;
 import fr.assurance.entities.VehiculeQuote;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +33,13 @@ public class QuoteService {
         quoteRepo.delete(id);
     }
 
-    public List<Quote> findByDone(boolean b) {
-        return quoteRepo.findByDone(b);
-    }
 
-    public Quote findOne(Integer idQuote) {
-        return quoteRepo.findOne(idQuote);
-    }
+	public List<Quote> findByDone(boolean done) {
+		return quoteRepo.findByDone(done);
+	}
+
+	public Quote findOne(Integer idQuote) {
+		return quoteRepo.findOne(idQuote);
+	}
+
 }

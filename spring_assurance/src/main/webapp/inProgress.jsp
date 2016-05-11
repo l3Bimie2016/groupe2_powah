@@ -6,16 +6,29 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Devis en cours</title>
 </head>
 <body>
+	<h1>Devis en cours</h1>
 	<c:forEach items="${ quotesList }" var="quote">
-		<c:if test="${ quote.type  == 'VehiculeQuote'}">
-			<form:form action='/quote/resume?idQuote=${ quote.id }' method="post" modelAttribute="quote">
-				<input type="submit" value="Reprendre"/>
-			</form:form>
-			${ quote.id }
-		</c:if>
+		<div>
+			<h2>Devis de voitures</h2>
+			<c:if test="${ quote.type  == 'VehiculeQuote'}">
+				<form:form action='/quote/resume?idQuote=${ quote.id }' method="post" modelAttribute="quote">
+					<input type="submit" value="Reprendre"/>
+				</form:form>
+				${ quote.id }
+			</c:if>
+		</div>
+		<div>
+			<h2>Devis d'habitation</h2>
+			<c:if test="${ quote.type  == 'HouseQuote'}">
+				<form:form action='/quote/resume?idQuote=${ quote.id }' method="post" modelAttribute="quote">
+					<input type="submit" value="Reprendre"/>
+				</form:form>
+				${ quote.id }
+			</c:if>
+		</div>
 	</c:forEach>
 </body>
 </html>
