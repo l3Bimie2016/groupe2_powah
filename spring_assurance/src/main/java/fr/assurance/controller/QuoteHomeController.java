@@ -1,5 +1,6 @@
 package fr.assurance.controller;
 
+import fr.assurance.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.assurance.dao.QuoteRepository;
 import fr.assurance.entities.HouseQuote;;
 
 @Controller
@@ -18,7 +18,7 @@ import fr.assurance.entities.HouseQuote;;
 @SessionAttributes("homeQuote")
 public class QuoteHomeController {
 	@Autowired
-	private QuoteRepository quoteManager;
+	private QuoteService quoteService;
 	
 	private String[] pageViews = new String[] {
 			"createQuoteHomeStep1",
@@ -37,7 +37,7 @@ public class QuoteHomeController {
 			@ModelAttribute("homeQuote") HouseQuote homeQuote) {
 		
 		homeQuote.setStep(currentPage);
-		homeQuote = quoteManager.save(homeQuote);
+		homeQuote = quoteService.save(homeQuote);
 		
 		return new ModelAndView(pageViews[currentPage - 1]);
 	}
@@ -46,7 +46,7 @@ public class QuoteHomeController {
 	public ModelAndView processFinish(@ModelAttribute("homeQuote") HouseQuote homeQuote,
 			SessionStatus status) {
 		homeQuote.setDone(true);
-		quoteManager.save(homeQuote);
+		quoteService.save(homeQuote);
 		status.setComplete();
 
 		return new ModelAndView("homeQuoteSuccess");

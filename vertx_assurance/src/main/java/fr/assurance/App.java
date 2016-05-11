@@ -89,8 +89,8 @@ public class App extends AbstractVerticle {
             getList(x, sql, params);
         });
 
-        //router.post("/private/vehSummary").consumes("application/json").handler(x -> {
-        router.post("/vehSummary").consumes("application/json").handler(x -> {
+        router.post("/private/vehSummary").consumes("application/json").handler(x -> {
+        //router.post("/vehSummary").consumes("application/json").handler(x -> {
             JsonObject json = x.getBodyAsJson();
             Integer marque = json.getInteger("marque");
             Integer modele = json.getInteger("modele");

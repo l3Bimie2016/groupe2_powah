@@ -1,5 +1,6 @@
 package fr.assurance.controller;
 
+import fr.assurance.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,7 +19,7 @@ import fr.assurance.entities.VehiculeQuote;
 @SessionAttributes("vehiculeQuote")
 public class QuoteVehiculeController {
 	@Autowired
-	private QuoteRepository quoteManager;
+	private QuoteService quoteServive;
 	
 	private String[] pageViews = new String[] {
 			"createQuoteVehicleStep1",
@@ -37,7 +38,7 @@ public class QuoteVehiculeController {
 			@ModelAttribute("vehiculeQuote") VehiculeQuote vehiculeQuote) {
 		
 		vehiculeQuote.setStep(currentPage);
-		vehiculeQuote = quoteManager.save(vehiculeQuote);
+		vehiculeQuote = quoteServive.save(vehiculeQuote);
 		
 		return new ModelAndView(pageViews[currentPage - 1]);
 	}
@@ -46,7 +47,7 @@ public class QuoteVehiculeController {
 	public ModelAndView processFinish(@ModelAttribute("vehiculeQuote") VehiculeQuote vehiculeQuote,
 			SessionStatus status) {
 		vehiculeQuote.setDone(true);
-		quoteManager.save(vehiculeQuote);
+		quoteServive.save(vehiculeQuote);
 		status.setComplete();
 
 		return new ModelAndView("vehiculeQuoteSuccess");
