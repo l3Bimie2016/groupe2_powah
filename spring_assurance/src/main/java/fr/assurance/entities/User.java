@@ -96,7 +96,11 @@ public class User {
 	public void setNb_crashes(Integer nb_crashes) {
 		this.nb_crashes = nb_crashes;
 	}
-	
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
 	public boolean add(fr.assurance.entities.Role role) {
 		return roles.add(role);
 	}

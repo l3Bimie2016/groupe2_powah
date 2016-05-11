@@ -1,7 +1,10 @@
 package fr.assurance.security;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
+import fr.assurance.entities.User;
+import fr.assurance.service.UserService;
 import fr.assurance.service.VertXService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -16,6 +19,8 @@ public class AssuranceAuthProvider implements AuthenticationProvider{
 
 	@Autowired
 	private VertXService vertx;
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -24,7 +29,10 @@ public class AssuranceAuthProvider implements AuthenticationProvider{
 
 		boolean isAuth = vertx.authenticate(username, password);
 		if (!isAuth) return null;
-		return new UsernamePasswordAuthenticationToken(username, password, new ArrayList<GrantedAuthority>());
+		Collection<? extends GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		User user = userService.findByName(username);
+		if(user != null) authorities = user.getRoles();
+		return new UsernamePasswordAuthenticationToken(username, password, authorities);
 	}
 
 	@Override

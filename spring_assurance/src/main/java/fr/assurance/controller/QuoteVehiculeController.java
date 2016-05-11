@@ -1,5 +1,6 @@
 package fr.assurance.controller;
 
+import fr.assurance.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties.Session;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ import fr.assurance.service.VertXService;
 @SessionAttributes("quote")
 public class QuoteVehiculeController {
 	@Autowired
-	private QuoteRepository quoteManager;
+	private QuoteService quoteServive;
 	
 	@Autowired
 	private VertXService vertx;
@@ -47,9 +48,9 @@ public class QuoteVehiculeController {
 	@RequestMapping(method=RequestMethod.POST)
 	public ModelAndView processPage(@RequestParam("_page") int currentPage, 
 			@ModelAttribute("quote") VehiculeQuote quote) {
-		System.out.println(quote.getId());
+		
 		quote.setStep(currentPage);
-		quote = quoteManager.save(quote);
+		quote = quoteServive.save(quote);
 		
 		return new ModelAndView(pageViews[currentPage - 1]);
 	}
@@ -58,7 +59,7 @@ public class QuoteVehiculeController {
 	public ModelAndView processFinish(@ModelAttribute("quote") VehiculeQuote quote,
 			SessionStatus status) {
 		quote.setDone(true);
-		quoteManager.save(quote);
+		quoteServive.save(quote);
 		VehSummaryMod vehSummary = vertx.getSummary(quote);
 		quote.setBrand(vehSummary.getBrand());
 		quote.setModel(vehSummary.getModel());
@@ -70,8 +71,10 @@ public class QuoteVehiculeController {
 	}
 	
 	@RequestMapping(path="/cancelVehiculeQuote", method=RequestMethod.POST)
-	public ModelAndView cancel(@ModelAttribute("quote") VehiculeQuote quote, SessionStatus status) {
-		status.setComplete();
+	public ModelAndView cancel(@ModelAttribute("quote") VehiculeQuote quote) {
+		if (quote.getId() != null) {
+			quoteServive.delete(quote.getId());
+		}
 		
 		return new ModelAndView("index");
 	}

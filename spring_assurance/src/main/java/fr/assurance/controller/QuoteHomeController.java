@@ -1,5 +1,6 @@
 package fr.assurance.controller;
 
+import fr.assurance.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,16 +11,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.assurance.bean.ApplicationData;
-import fr.assurance.dao.QuoteRepository;
-import fr.assurance.entities.HouseQuote;;
+import fr.assurance.entities.HouseQuote;
 
 @Controller
 @RequestMapping("/quote/home.form")
 @SessionAttributes("quote")
 public class QuoteHomeController {
 	@Autowired
-	private QuoteRepository quoteManager;
+	private QuoteService quoteService;
 	
 	private String[] pageViews = new String[] {
 			"createQuoteHomeStep1",
@@ -36,9 +35,9 @@ public class QuoteHomeController {
 	@RequestMapping(method=RequestMethod.POST)
 	public ModelAndView processPage(@RequestParam("_page") int currentPage, 
 			@ModelAttribute("homeQuote") HouseQuote quote) {
-		
+
 		quote.setStep(currentPage);
-		quote = quoteManager.save(quote);
+		quote = quoteService.save(quote);
 		
 		return new ModelAndView(pageViews[currentPage - 1]);
 	}
@@ -46,8 +45,9 @@ public class QuoteHomeController {
 	@RequestMapping(params="_finish")
 	public ModelAndView processFinish(@ModelAttribute("quote") HouseQuote quote,
 			SessionStatus status) {
+		
 		quote.setDone(true);
-		quoteManager.save(quote);
+		quoteService.save(quote);
 		status.setComplete();
 
 		return new ModelAndView("homeQuoteSuccess");
@@ -55,6 +55,9 @@ public class QuoteHomeController {
 	
 	@RequestMapping(path="/cancelHomeQuote", method=RequestMethod.POST)
 	public ModelAndView cancel(@ModelAttribute("quote") HouseQuote quote) {
+		if (quote.getId() != null) {
+			quoteService.delete(quote.getId());
+		}
 		
 		return new ModelAndView("index");
 	}
