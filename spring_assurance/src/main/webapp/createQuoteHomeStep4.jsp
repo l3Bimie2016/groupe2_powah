@@ -9,7 +9,12 @@
     <title>Création d'un devis d'habitation étape 4</title>
 </head>
 <body>
-	<form:form action="/quote/home.form?_finish=1" method="post" modelAttribute="homeQuote">
+	<form:form action="/quote/home.form?_finish=1" method="post" modelAttribute="quote">
+        <div>
+        	<form:label path="id">
+        		<c:out value="${ quote.id }"></c:out>
+        	</form:label>
+        </div>
         <div>
         	<form:label path="formula">Formule : </form:label>
         	<form:select path="formula">
@@ -20,7 +25,7 @@
     	<input type="submit" value="Voir le résumé du devis" />
 	</form:form>
 	
-	<form:form action="/quote/home.form/cancelHomeQuote" method="post" modelAttribute="homeQuote">
+	<form:form action="/quote/home.form/cancelHomeQuote" method="post" modelAttribute="quote">
 		<input type="submit" value="Annuler" />
 	</form:form>
 </body>

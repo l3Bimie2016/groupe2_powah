@@ -9,7 +9,12 @@
     <title>Création d'un devis de véhicule étape 4</title>
 </head>
 <body>
-	<form:form action="/quote/vehicule.form?_finish=1" method="post" modelAttribute="vehiculeQuote">
+	<form:form action="/quote/vehicule.form?_finish=1" method="post" modelAttribute="quote">
+    	<div>
+        	<form:label path="id">
+        		<c:out value="${ quote.id }"></c:out>
+        	</form:label>
+        </div>
     	<div>
         	<form:label path="contract_type">Type de contrat : </form:label>
         	<form:select path="contract_type">
@@ -20,7 +25,7 @@
 	    <input type="submit" value="Finaliser" />
 	</form:form>
 
-	<form:form action="/quote/vehicule.form/cancelVehiculeQuote" method="post" modelAttribute="vehiculeQuote">
+	<form:form action="/quote/vehicule.form/cancelVehiculeQuote" method="post" modelAttribute="quote">
 		<input type="submit" value="Annuler" />
 	</form:form>
 </body>

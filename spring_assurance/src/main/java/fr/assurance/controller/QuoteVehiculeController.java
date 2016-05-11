@@ -2,6 +2,7 @@ package fr.assurance.controller;
 
 import fr.assurance.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.assurance.bean.ApplicationData;
 import fr.assurance.controller.model.VehSummaryMod;
 import fr.assurance.dao.QuoteRepository;
 import fr.assurance.entities.HouseQuote;
@@ -19,10 +21,16 @@ import fr.assurance.service.VertXService;
 
 @Controller
 @RequestMapping("/quote/vehicule.form")
-@SessionAttributes("vehiculeQuote")
+@SessionAttributes("quote")
 public class QuoteVehiculeController {
 	@Autowired
 	private QuoteService quoteServive;
+	
+	@Autowired
+	private VertXService vertx;
+	
+	@Autowired
+    private ApplicationData appData;
 	
 	private String[] pageViews = new String[] {
 			"createQuoteVehicleStep1",
@@ -33,39 +41,39 @@ public class QuoteVehiculeController {
 	
 	@RequestMapping
 	public ModelAndView initialQuoteVehicule() {
-		return new ModelAndView("createQuoteVehicleStep1", "vehiculeQuote", new VehiculeQuote());
+		System.out.println("Ici");
+		return new ModelAndView("createQuoteVehicleStep1", "quote", new VehiculeQuote());
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ModelAndView processPage(@RequestParam("_page") int currentPage, 
-			@ModelAttribute("vehiculeQuote") VehiculeQuote vehiculeQuote) {
+			@ModelAttribute("quote") VehiculeQuote quote) {
 		
-		vehiculeQuote.setStep(currentPage);
-		vehiculeQuote = quoteServive.save(vehiculeQuote);
+		quote.setStep(currentPage);
+		quote = quoteServive.save(quote);
 		
 		return new ModelAndView(pageViews[currentPage - 1]);
 	}
 	
 	@RequestMapping(params="_finish")
-	public ModelAndView processFinish(@ModelAttribute("vehiculeQuote") VehiculeQuote vehiculeQuote,
+	public ModelAndView processFinish(@ModelAttribute("quote") VehiculeQuote quote,
 			SessionStatus status) {
-		vehiculeQuote.setDone(true);
-		quoteServive.save(vehiculeQuote);
-		VertXService vertx = new VertXService();
-		VehSummaryMod vehSummary = vertx.getSummary(vehiculeQuote);
-		vehiculeQuote.setBrand(vehSummary.getBrand());
-		vehiculeQuote.setModel(vehSummary.getModel());
-		vehiculeQuote.setFiscal_horse_power(vehSummary.getFiscal_horse_power());
-		vehiculeQuote.setType_fuel(vehSummary.getType_fuel());
+		quote.setDone(true);
+		quoteServive.save(quote);
+		VehSummaryMod vehSummary = vertx.getSummary(quote);
+		quote.setBrand(vehSummary.getBrand());
+		quote.setModel(vehSummary.getModel());
+		quote.setFiscal_horse_power(vehSummary.getFiscal_horse_power());
+		quote.setType_fuel(vehSummary.getType_fuel());
 		status.setComplete();
 
 		return new ModelAndView("vehiculeQuoteSuccess");
 	}
 	
 	@RequestMapping(path="/cancelVehiculeQuote", method=RequestMethod.POST)
-	public ModelAndView cancel(@ModelAttribute("vehiculeQuote") VehiculeQuote vehiculeQuote) {
-		if (vehiculeQuote.getId() != null) {
-			quoteServive.delete(vehiculeQuote.getId());
+	public ModelAndView cancel(@ModelAttribute("quote") VehiculeQuote quote) {
+		if (quote.getId() != null) {
+			quoteServive.delete(quote.getId());
 		}
 		
 		return new ModelAndView("index");

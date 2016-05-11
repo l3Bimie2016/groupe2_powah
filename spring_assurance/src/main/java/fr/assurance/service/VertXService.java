@@ -76,12 +76,18 @@ public class VertXService {
     }
 
     public VehSummaryMod getSummary(VehiculeQuote vq){
-
+    	System.out.println((appData==null?"AppData C'est null":"AppData C'est pas null"));
+    	System.out.println((appData.getToken()==null?"C'est null":"C'est pas null"));
+    	
         VehSummaryMod vehsum = new VehSummaryMod(vq);
 
         String response = jsonNoSuccess;
-
-        JsonObject json = new JsonParser().parse(appData.getToken()).getAsJsonObject();
+        
+        JsonObject json = new JsonParser()
+        		.parse(
+        			appData.getToken()
+        		)
+        		.getAsJsonObject();
         if(json.get("success").getAsBoolean()) {
             HttpHeaders header = new HttpHeaders();
             String token = json.get("token").getAsString();
